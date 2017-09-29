@@ -59,9 +59,9 @@ public class FileHelper {
 			String expectedTime = tempMap.get(f.getName());
 			Long receivedTime = f.lastModified();
 			
+			//TODO: remove date format and check for time
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
 	        Date expectedTime1 = dateFormat.parse(expectedTime);
-			
 	        
 	        Calendar expectedCalTime = new GregorianCalendar();
 	        Calendar receivedCalTime = new GregorianCalendar();
