@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import com.exhibit.helper.ExhibitMonitorContext;
 import com.exhibit.threads.FileProcessingThread;
+import com.exhibit.threads.RecordProcessingThread;
 
 public class ExhibitMonitorApplication {
 	
@@ -21,7 +22,16 @@ public class ExhibitMonitorApplication {
 		}
 	
 		Thread processingThread = new Thread(new FileProcessingThread());
-		processingThread.run();
+		processingThread.start();
+		
+		synchronized (processingThread) {
+			Thread recordProcessingThread = new Thread(new RecordProcessingThread());
+			try {
+				recordProcessingThread.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

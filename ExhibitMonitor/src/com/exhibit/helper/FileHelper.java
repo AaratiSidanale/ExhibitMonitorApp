@@ -28,7 +28,7 @@ public class FileHelper {
 	}
 	
 	public boolean isValid(File f){
-		tempMap = ExhibitMonitorContext.filePropertyMap;
+		tempMap = ExhibitMonitorContext.getFilePropertyMap();
 		if(tempMap != null && tempMap.containsKey(f.getName())){
 			return true;
 		}else{
@@ -38,12 +38,12 @@ public class FileHelper {
 	}
 	
 	public boolean isDuplicate(File f) throws ParseException{
-		tempMap = ExhibitMonitorContext.processedFileMap;
+		tempMap = ExhibitMonitorContext.getFilePropertyMap();
 		if(tempMap != null && tempMap.containsKey(f.getName())){
 			String processeddate = tempMap.get(f.getName());
 			//String currentDate = new Date().toString();
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 			if(processeddate.equals(sdf.format(new Date()))){
 				System.out.println(f.getName() + " has been already processed.");
 				return true;
@@ -53,7 +53,7 @@ public class FileHelper {
 	}
 	
 	public boolean isOnTime(File f) throws ParseException{
-		tempMap = ExhibitMonitorContext.filePropertyMap;
+		tempMap = ExhibitMonitorContext.getFilePropertyMap();
 		
 		if(isValid(f)){
 			String expectedTime = tempMap.get(f.getName());

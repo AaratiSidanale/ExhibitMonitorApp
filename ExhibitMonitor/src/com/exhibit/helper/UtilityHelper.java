@@ -16,4 +16,10 @@ public class UtilityHelper {
 		return date;
 	}
 	
+	public static String convertDateToString(Date date) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		String strDate = sdf.format(date);
+		return strDate;
+	}
+	
 }

@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
+import java.util.Vector;
 
 import com.exhibit.dto.CustomerRecordDTO;
-import com.exhibit.helper.UtilityHelper;
+import com.exhibit.helper.ExhibitMonitorContext;
 import com.exhibit.validator.CustomerDetailsValidator;
 
 public class FileParserThread implements Runnable{
@@ -38,6 +38,20 @@ public class FileParserThread implements Runnable{
 						Integer.parseInt(custDetails[0]), custDetails[1], custDetails[2], 
 						custDetails[3], custDetails[4], Integer.parseInt(custDetails[5]));
 				boolean isValidData = CustomerDetailsValidator.isValidCustData(custDto);
+				
+				if(isValidData){
+					Vector<CustomerRecordDTO> validCustDataVctr = ExhibitMonitorContext.getValidCustDataVctr();
+					if(validCustDataVctr == null){
+						validCustDataVctr = new Vector<CustomerRecordDTO>();
+					}
+					validCustDataVctr.add(custDto);
+				}else{
+					Vector<CustomerRecordDTO> inValidCustDataVctr = ExhibitMonitorContext.getInValidCustDataVctr();
+					if(inValidCustDataVctr == null){
+						inValidCustDataVctr = new Vector<CustomerRecordDTO>();
+					}
+					inValidCustDataVctr.add(custDto);
+				}
 			}
 			
 		} catch (FileNotFoundException e) {
